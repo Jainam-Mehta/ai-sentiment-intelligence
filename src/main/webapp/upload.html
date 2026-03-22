@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+<head>
+    <title>Upload CSV - AI Sentiment</title>
+    <style>
+        body { font-family: Arial; background: #0a0f1e; color: white; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: #1e293b; padding: 30px; border-radius: 10px; }
+        input, select, button { padding: 10px; margin: 10px 0; width: 100%; box-sizing: border-box; }
+        button { background: #3b82f6; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        button:hover { background: #2563eb; }
+        a { color: #94a3b8; text-decoration: none; }
+        .help { background: #2d3748; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .help pre { background: #1a202c; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload Reviews CSV</h2>
+        <p>Upload a CSV file with your reviews and Specify which column contains the review text.</p>
+        
+        <form action="uploadCSV" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".csv" required>
+            
+            <label>Keyword</label>
+            <input type="text" name="keyword" placeholder="Enter keyword" required>
+            
+            <label>Column containing review text</label>
+            <input type="number" name="textColumn" value="1" min="1" required>
+            
+            <label>Does your CSV have a header row?</label>
+            <select name="hasHeader">
+                <option value="true">Yes - skip first row</option>
+                <option value="false" selected>No - process all rows</option>
+            </select>
+            
+            <button type="submit">Upload & Analyze</button>
+        </form>
+        
+        <div class="help">
+            <h3>CSV Format Examples</h3>
+            <p><strong>Single column review: </strong></p>
+            <pre>"I love this product"
+"This is terrible"
+"Pretty average, hehee"</pre>
+            
+            <p><strong>Multiple columns:</strong></p>
+            <pre>"2024-01-01","John","5 stars","I love this product!","Verified Purchase",....
+"2024-01-02","Jane","1 star","This is terrible","Unverified",...</pre>
+            <p>Set <strong>text column = 4</strong> (4th column) to extract the review text.</p>
+        </div>
+        
+        <p><a href="index.html">Back to Dashboard</a></p>
+    </div>
+</body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+    const skipped = urlParams.get('skipped');
+    const errors = urlParams.get('errors');
+    const error = urlParams.get('error');
+
+    window.onload = function() {
+        const resultDiv = document.createElement('div');
+        resultDiv.style.marginTop = '20px';
+        resultDiv.style.padding = '15px';
+        resultDiv.style.borderRadius = '5px';
+        
+        if (success) {
+            resultDiv.style.background = '#14532d';
+            resultDiv.style.color = '#86efac';
+            resultDiv.innerHTML = `
+                <h3>Upload Complete!</h3>
+                <p>Successfully queued: ${success} reviews</p>
+                ${skipped ? `<p>Skipped: ${skipped}</p>` : ''}
+                ${errors ? `<p>Errors: ${errors}</p>` : ''}
+                <p>Reviews are being processed in the background. Check the dashboard soon.</p>
+            `;
+        } else if (error === 'missing') {
+            resultDiv.style.background = '#7f1d1d';
+            resultDiv.style.color = '#fecaca';
+            resultDiv.innerHTML = 'Missing file or keyword';
+        } else if (error === 'invalidColumn') {
+            resultDiv.style.background = '#7f1d1d';
+            resultDiv.style.color = '#fecaca';
+            resultDiv.innerHTML = 'Invalid column number';
+        } else if (error === 'processing') {
+            resultDiv.style.background = '#7f1d1d';
+            resultDiv.style.color = '#fecaca';
+            resultDiv.innerHTML = 'Error processing file';
+        }
+        
+        if (resultDiv.innerHTML) {
+            document.querySelector('.container').appendChild(resultDiv);
+        }
+    };
+</script>
+</html>

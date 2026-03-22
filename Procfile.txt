@@ -1,0 +1,1 @@
+web: java -jar target/Social_Sentiment_Java_Project-1.0-SNAPSHOT.war

@@ -1,0 +1,12 @@
+target/
+*.log
+*.class
+.settings/
+.classpath
+.project
+.DS_Store
+nb-configuration.xml
+ai-service/__pycache__/
+ai-service/*.pyc
+**/secrets.properties
+**/config.properties
