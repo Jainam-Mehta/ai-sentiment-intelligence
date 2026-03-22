@@ -17,11 +17,16 @@ public class EmailSender
 {
     private static final String SMTP_HOST = "smtp.gmail.com";
     private static final String SMTP_PORT = "587";
-    private static final String USERNAME = "jainammehta756@gmail.com";
-    private static final String PASSWORD = "uwveqgvqskeyltwm"; 
-
+    private static final String USERNAME = System.getenv("EMAIL_USERNAME");
+    private static final String PASSWORD = System.getenv("EMAIL_PASSWORD");
+    
     public static void sendEmail(String to, String subject, String htmlContent) throws MessagingException 
     {
+        if (USERNAME == null || USERNAME.trim().isEmpty() || PASSWORD == null || PASSWORD.trim().isEmpty()) 
+        {
+            System.out.println("Email credentials not set, skipping email");
+            return;
+        }
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
