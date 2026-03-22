@@ -107,8 +107,8 @@ public class DiagnoseEmailServlet extends HttpServlet
         
         out.println("<h2>Test 4: Direct SMTP Test</h2>");
         
-        final String username = "jainammehta756@gmail.com";
-        final String password = "uwveqgvqskeyltwm";
+        final String username = System.getenv("EMAIL_USERNAME");
+        final String password = System.getenv("EMAIL_PASSWORD");
         
         out.println("<div>Testing with: " + username + "</div>");
         out.println("<div>Password length: " + password.length() + " characters</div>");
