@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from transformers import pipeline
 import logging
+import os
 import emoji
 
 logging.basicConfig(level=logging.INFO)
@@ -94,3 +95,6 @@ if __name__ == '__main__':
     print(f"Server: http://localhost:5001")
     print("="*50 + "\n")
     app.run(host='0.0.0.0', port=5001, debug=False, use_reloader=False)
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5001))
+    app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)

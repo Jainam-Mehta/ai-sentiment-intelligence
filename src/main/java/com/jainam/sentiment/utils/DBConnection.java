@@ -14,9 +14,9 @@ import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 
 public class DBConnection 
 {
-    private static final String url = "jdbc:mysql://localhost:3306/sentiment_dashboard?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
-    private static final String name = "root";
-    private static final String password = "coolbird11";
+    private static final String url = System.getenv().getOrDefault("MYSQL_URL", "jdbc:mysql://localhost:3306/sentiment_dashboard?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true");
+    private static final String name = System.getenv().getOrDefault("MYSQL_USER", "root");
+    private static final String password = System.getenv().getOrDefault("MYSQL_PASSWORD", "coolbird11");
     
     static 
     {

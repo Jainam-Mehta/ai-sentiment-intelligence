@@ -15,7 +15,7 @@ import java.time.Duration;
 
 public class AISentimentClient 
 {
-    private static final String AI_SERVICE_URL = "http://localhost:5001/analyze";
+    private static final String AI_SERVICE_URL = System.getenv().getOrDefault("AI_SERVICE_URL", "http://localhost:5001/analyze");
     private static final int TIMEOUT_SECONDS = 5;
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(TIMEOUT_SECONDS))
