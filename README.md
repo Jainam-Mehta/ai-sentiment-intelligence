@@ -248,3 +248,7 @@ Render for the free tier
 Clever Cloud for the MySQL add‑on
 
 The open‑source community for all the libraries used
+
+IMP NOTE:
+EMAIL ERROR MIGHT OCCUR:
+The email error is a connection timeout to smtp.gmail.com:587. This typically happens because Render’s free tier may block outbound SMTP to prevent spam. The credentials are correct, but the container cannot reach Gmail’s SMTP server.
