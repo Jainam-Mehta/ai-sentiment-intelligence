@@ -1,5 +1,5 @@
 {
   "build": {
-    "goals": ["clean", "package"]
+    "goal": ["clean", "package"]
   }
 }
