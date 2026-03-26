@@ -16,9 +16,7 @@ logger.info(f"Loading model: {MODEL_NAME}")
 
 def preprocess_text(text):
     """Convert emojis to text and clean up"""
-    # Convert 😊 to :smiling_face:
     text_with_emojis = emoji.demojize(text)
-    # Remove colons for better model understanding
     text_clean = text_with_emojis.replace(':', ' ')
     return text_clean
 
@@ -45,7 +43,6 @@ def analyze_sentiment():
         if not data or 'text' not in data:
             return jsonify({'error': 'No text provided'}), 400
         
-        # Process emojis!
         raw_text = data['text'].strip()
         processed_text = preprocess_text(raw_text)
         
@@ -86,15 +83,15 @@ def info():
     })
 
 if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 7860))
+    
     print("\n" + "="*50)
     print("AI SENTIMENT ANALYSIS SERVICE")
     print("="*50)
     print(f"Model: {MODEL_NAME}")
     print(f"Emoji Support: Enabled")
     print(f"Status: {'Loaded' if model_loaded else 'Failed'}")
-    print(f"Server: http://localhost:5001")
+    print(f"Server: http://0.0.0.0:{port}")
     print("="*50 + "\n")
-    app.run(host='0.0.0.0', port=5001, debug=False, use_reloader=False)
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5001))
+    
     app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)
